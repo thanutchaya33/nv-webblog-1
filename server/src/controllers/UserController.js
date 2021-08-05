@@ -1,8 +1,9 @@
-const user = require("../models/user");
+const { default: UserService } = require("../../../client/src/services/UserService");
+const {user} = require("../models");
 
 module.exports = {
   //get all user
-  asyncindex(req,res){
+  async index(req,res){
     //res.send('เรียกข้อมูลผู้ใช้งานทั้งหมด');
     try{
       conts users = await user.findAll();
@@ -14,14 +15,29 @@ module.exports = {
       });
     }
   },
-   show(req,res){
-      res.send('ดูข้อมูลผู้ใช้งาน' + req.params.userId);
+   async show(req,res){
+     try{
+       const user = await UserfindByPK(req.params.userId);
+       res.send(user);
+    }
+    catch(err){
+      res.status(500).send({
+        error: 'The users information was incorrect'
+      });
+    }
+  },
+    async create(req,res){
+      const user = await User.create(req.body)
+      res.send(user.toJSON());
+    }
+    catch(err){
+      res.status(500).send({
+        error: 'The users information was incorrect'
+      });
     },
-    create(req,res){
-      res.send('ทำการสร้างผู้ใช้งาน ' + JSON.stringify(req.body));
-    },
-    put(req,res){
-      res.send('ทำการแก้ไขผู้ใช้งาน' + req.params.userId + ' : ' +
+    async put(req,res){
+      const user = await User.put(req.body)
+      res.send(user.)
            JSON.stringify(req.body));
     },
     remove(req,res){

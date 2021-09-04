@@ -17,11 +17,12 @@
         </p>
         <hr>
         </div>
+        <p><button v-on:click="login">Login</button></p>
     </div>
 </div>
 </template>
 <script>
-import UsersService from '@/services/UserService'
+import UsersService from "@/services/UserService";
 
 export default {
     data(){
@@ -45,6 +46,7 @@ export default {
             if(result){
                 try{
                     await UsersService.delete(user)
+                    this.refreshData()
                 }catch(error){
                     console.log(error)
                 }
@@ -53,7 +55,13 @@ export default {
     },
     async refreshData(){
         this.users = (await UsersService.index()).data
-    
+    },
+    login(){
+      this.$store.dispatch('setToken',null)
+      this.$store.dispatch('setUser',null)
+      this.$router.push({
+          name: 'login'
+      })
     }
 };
 </script>

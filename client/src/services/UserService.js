@@ -2,18 +2,18 @@ import Api from '@/services/Api'
 
 export default {
     index() {
-        return Api().get('users')
+        return Api().get('blogs')
     },
-    show(userId){
-        return Api().get('user/'+userId)
+    show(blogId){
+        return Api().get('blog/'+blogId)
     },
-    post(user){
-        return Api().post('user', user)
+    post(blog){
+        return Api().post('blog', blog)
     },
-    put(user){
-        return Api().put('user/'+user.id, user)
+    put(blog){
+        return Api().put('blog/'+blog.id, blog)
     },
-    delete(user){
-        return Api().delete('user/'+user.id, user)
+    delete(blog){
+        return Api().delete('blog/'+blog.id, blog)
     },
 }
